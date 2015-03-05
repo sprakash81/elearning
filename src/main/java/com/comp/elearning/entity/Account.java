@@ -1,15 +1,6 @@
 package com.comp.elearning.entity;
 
-import java.util.Collection;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "account")
@@ -19,8 +10,9 @@ public class Account extends BasePersistentObject {
 	@Column(name = "active_ind", nullable = false)
 	private Boolean activeIndicator = true;
 
-	@OneToMany(mappedBy = "address", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private Collection<Address> addresses;
+	// @OneToMany(mappedBy = "account", cascade = CascadeType.ALL, fetch =
+	// FetchType.LAZY)
+	// private Collection<Address> addresses;
 
 	@Column(name = "email_id", nullable = false, length = 60)
 	private String emailId;
@@ -35,9 +27,9 @@ public class Account extends BasePersistentObject {
 		return activeIndicator;
 	}
 
-	public Collection<Address> getAddresses() {
-		return addresses;
-	}
+	// public Collection<Address> getAddresses() {
+	// return addresses;
+	// }
 
 	public String getEmailId() {
 		return emailId;
@@ -55,9 +47,9 @@ public class Account extends BasePersistentObject {
 		this.activeIndicator = activeIndicator;
 	}
 
-	public void setAddresses(Collection<Address> addresses) {
-		this.addresses = addresses;
-	}
+	// public void setAddresses(Collection<Address> addresses) {
+	// this.addresses = addresses;
+	// }
 
 	public void setEmailId(String emailId) {
 		this.emailId = emailId;

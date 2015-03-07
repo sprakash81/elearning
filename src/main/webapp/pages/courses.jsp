@@ -63,10 +63,10 @@ table tr:nth-child(even) {
 			$scope.newCourse.code = ' ';
 			$scope.newCourse.title = ' ';
 			$scope.submit = function() {
-				console.log("in here");
+				/* console.log("in here");
 				console.log($scope.newCourse.toString());
 				console.log($scope.newCourse.code);
-				console.log($scope.newCourse.title);
+				console.log($scope.newCourse.title); */
 				var dataObj = {'code':$scope.newCourse.code, 'title':$scope.newCourse.title};
 				
 				$http({

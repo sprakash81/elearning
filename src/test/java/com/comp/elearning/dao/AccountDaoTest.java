@@ -4,9 +4,8 @@ import static junit.framework.Assert.*;
 
 import java.util.List;
 
-import org.hibernate.exception.ConstraintViolationException;
-import org.hibernate.exception.DataException;
-import org.junit.Ignore;
+import javax.validation.ConstraintViolationException;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,7 +73,7 @@ public class AccountDaoTest extends AbstractJpaTests {
 		assertEquals(0L, retrievedAccount.getVersion().longValue());
 	}
 
-	@Test(expected = DataException.class)
+	@Test(expected = ConstraintViolationException.class)
 	public void testSaveWithGreaterThanMaxLength() {
 		final Account account = new Account();
 		account.setFirstName("aaaaa aaaaa aaaaa aaaaa aaaaa aaaaa aaaaa aaaaa aaaaa aaaaa aaaaa aaaaa");
@@ -110,8 +109,8 @@ public class AccountDaoTest extends AbstractJpaTests {
 		assertEquals(0L, retrievedAccount.getVersion().longValue());
 	}
 
-	@Ignore("Hibernate save fails and saves more than the lenght of the column.  Alternate is to use @Size in entity.")
-	@Test(expected = DataException.class)
+	// @Ignore("Hibernate save fails and saves more than the lenght of the column.  Alternate is to use @Size in entity.")
+	@Test(expected = ConstraintViolationException.class)
 	public void testUpdateWithGreaterThanMaxLength() {
 		final Account account = dao.get(1l);
 		account.setFirstName("aaaaa aaaaa aaaaa aaaaa aaaaa aaaaa aaaaa aaaaa aaaaa aaaaa aaaaa aaaaa");
@@ -122,7 +121,7 @@ public class AccountDaoTest extends AbstractJpaTests {
 		fail("The test should have failed with Data Exception for lengths being greater than max length");
 	}
 
-	@Ignore("Hibernate save fails and saves with empty string for mandatory columns.  Alternate is to use @NotNull in entity.")
+	// @Ignore("Hibernate save fails and saves with empty string for mandatory columns.  Alternate is to use @NotNull in entity.")
 	@Test(expected = ConstraintViolationException.class)
 	public void testUpdateWithoutMandatoryFields() {
 		final Account account = dao.get(1l);

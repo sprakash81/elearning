@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>eLearning - Add Account</title>
+<title>eLearning - Add User</title>
 <style>
 table, th, td {
 	border: 1px solid grey;

@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.comp.elearning.dao.AccountDao;
 import com.comp.elearning.dao.TrainingDao;
+import com.comp.elearning.entity.Account;
 import com.comp.elearning.entity.Training;
 import com.comp.elearning.exception.ApplicationException;
 import com.comp.elearning.exception.EntityNotFoundException;
@@ -14,6 +16,9 @@ import com.comp.elearning.service.TrainingService;
 
 @Service
 public class TrainingServiceImpl implements TrainingService {
+
+	@Autowired
+	private AccountDao accountDao;
 
 	@Autowired
 	private TrainingDao dao;
@@ -31,6 +36,17 @@ public class TrainingServiceImpl implements TrainingService {
 			throw new EntityNotFoundException(Training.class, id);
 		}
 		dao.delete(id);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<Training> findByAccount(long accountId)
+			throws EntityNotFoundException {
+		final Account account = accountDao.get(accountId);
+		if (account == null) {
+			throw new EntityNotFoundException(Account.class, accountId);
+		}
+		return dao.findByAccount(account);
 	}
 
 	@Override

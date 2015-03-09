@@ -2,26 +2,20 @@ package com.comp.elearning.entity;
 
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "training")
 @NamedQueries({ @NamedQuery(name = "searchByAccount", query = "from Training t where t.account.id = :id") })
 public class Training extends BasePersistentObject {
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	private Account account;
 
 	@Column(name = "comments", length = 400)
 	private String comments;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	private Course course;
 
 	@Column(name = "end_date")

@@ -10,6 +10,9 @@ public interface TrainingService extends BaseService<Training> {
 
 	public Training create(Training entity) throws ApplicationException;
 
+	public List<Training> createOrUpdate(List<Training> trainings)
+			throws ApplicationException;
+
 	public void delete(Long id) throws EntityNotFoundException;
 
 	public List<Training> findByAccount(long accountId)

@@ -1,5 +1,6 @@
 package com.comp.elearning.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,18 @@ public class TrainingServiceImpl implements TrainingService {
 	}
 
 	@Override
+	@Transactional
+	public List<Training> createOrUpdate(List<Training> trainings)
+			throws ApplicationException {
+		final List<Training> updatedList = new ArrayList<Training>();
+		for (final Training training : trainings) {
+			updatedList.add(update(training));
+		}
+		return updatedList;
+	}
+
+	@Override
+	@Transactional
 	public void delete(Long id) throws EntityNotFoundException {
 		final Training entity = dao.get(id);
 		if (null == entity) {
@@ -65,8 +78,16 @@ public class TrainingServiceImpl implements TrainingService {
 	@Transactional
 	public Training update(Training entity) throws ApplicationException {
 		validateMandatoryFields(entity);
+		validateCrossFields(entity);
 		final Long id = dao.saveOrUpdate(entity);
 		return get(id);
+	}
+
+	private void validateCrossFields(Training entity)
+			throws ApplicationException {
+		if ((null != entity.getEndDate()) && entity.getGrade().isEmpty())
+			throw new ApplicationException(this.getClass(),
+					"Grade is required if training is completed.");
 	}
 
 	private void validateMandatoryFields(Training entity)
@@ -80,9 +101,6 @@ public class TrainingServiceImpl implements TrainingService {
 		if (null == entity.getStartDate())
 			throw new ApplicationException(this.getClass(),
 					"Start date is required in training.");
-		if ((null != entity.getEndDate()) && entity.getGrade().isEmpty())
-			throw new ApplicationException(this.getClass(),
-					"Grade is required if training is completed.");
 	}
 
 }
